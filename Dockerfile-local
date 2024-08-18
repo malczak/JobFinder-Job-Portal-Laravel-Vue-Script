@@ -1,0 +1,44 @@
+FROM php:8.2-fpm
+ENV COMPOSER_ALLOW_SUPERUSER=1
+RUN apt-get update -yqq
+RUN apt-get install gnupg -yqq
+RUN apt-get install npm -yqq
+RUN apt-get install git cron nodejs supervisor libcurl4-gnutls-dev libonig-dev libicu-dev libzip-dev libmcrypt-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libpq-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev bash-completion -yqq
+RUN docker-php-ext-install mbstring pdo_mysql curl intl gd xml zip opcache bz2 exif bcmath
+# for tests
+RUN docker-php-ext-configure gd --with-jpeg && docker-php-ext-install gd
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
+# Create system user to run Composer and Artisan Commands
+RUN useradd -G www-data,root -u 1000 -d /home/ubuntu ubuntu
+RUN mkdir -p /home/ubuntu/.composer && \
+    chown -R ubuntu:ubuntu /home/ubuntu
+
+WORKDIR /var/www/jobex
+COPY --chown=ubuntu:ubuntu . .
+
+COPY --chown=ubuntu:ubuntu ./docker-compose/www-entrypoint.sh ./docker-entrypoint.sh
+RUN chmod +x ./docker-entrypoint.sh
+
+#ARG APP_ENV
+
+#RUN cp ${APP_ENV} .env
+RUN cp .env.local .env
+#RUN composer install
+#RUN php artisan storage:link
+
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+    php -r "if (hash_file('sha384', 'composer-setup.php') === 'dac665fdc30fdd8ec78b38b9800061b4150413ff2e3b6f88543c636f7cd84f6db9189d43a81e5503cda447da73c7e5b6') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
+    php composer-setup.php && \
+    php -r "unlink('composer-setup.php');" && \
+    php composer.phar install
+
+#RUN php artisan migrate:fresh && \
+#    php artisan db:seed && \
+#    php artisan storage:link && \
+#    php artisan key:generate
+
+CMD docker-php-entrypoint php-fpm
+
+USER root

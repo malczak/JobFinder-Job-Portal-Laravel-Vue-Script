@@ -1,0 +1,81 @@
+# LOCAL INSTANCE
+services:
+    www:
+        build:
+            context: .
+            dockerfile: ./Dockerfile-local
+        container_name: www
+        develop:
+            watch:
+                -   action: sync
+                    path: ./
+                    target: /var/www/jobex
+                    ignore:
+                        - .env.local
+                        - vendor/
+                        - node_modules/
+                        - dbdata/
+                        - storage/
+                        - docker-compose/
+                        - docker*
+        restart: unless-stopped
+        working_dir: /var/www/jobex
+        depends_on:
+            - www_mysql
+            - www_redis
+        networks:
+            - jobex_app
+        volumes:
+            - ./docker-compose/certs:/var/www/ssl
+            - ./storage:/var/www/jobex/storage
+            - ./ini/www.ini:/usr/local/etc/php/conf.d/custom-php.ini
+        entrypoint: /var/www/jobex/docker-entrypoint.sh
+
+    www_mysql:
+        platform: linux/x86_64
+        image: mysql:8.0.28
+        container_name: www_mysql
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: www_db
+            MYSQL_USER: www_db
+            MYSQL_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
+        volumes:
+            - ./dbdata/mysql:/var/lib/mysql
+        ports:
+            - "33061:3306"
+        networks:
+            - jobex_app
+
+    www_redis:
+        image: redis:6.2-alpine
+        container_name: www_redis
+        restart: unless-stopped
+        ports:
+            - '6381:6379'
+        networks:
+            - jobex_app
+        volumes:
+            - ./dbdata/redis:/data
+
+    www_nginx:
+        image: nginx:1.17-alpine
+        container_name: www_nginx
+        restart: unless-stopped
+        ports:
+            - "8083:80"
+            - "4043:443"
+            - "8888:8888"
+        volumes:
+            - .:/var/www/jobex
+            - ./docker-compose/certs:/etc/nginx/ssl
+            - ./docker-compose/www-nginx:/etc/nginx/conf.d
+        depends_on:
+            - www
+        networks:
+            - jobex_app
+
+networks:
+    jobex_app:
+        driver: bridge
