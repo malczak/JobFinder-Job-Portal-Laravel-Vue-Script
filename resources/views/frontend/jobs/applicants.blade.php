@@ -16,7 +16,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 @if (count($applicants) > 0)
-                    
+
                 <div class="card">
                     @foreach ($applicants as $applicant)
                     <div class="card-header">Job Title:  <a href="{{ route('job.show', [$applicant->id, $applicant->slug]) }}">{{ $applicant->title }}</a></div>
@@ -28,14 +28,14 @@
                             <table class="table text-center">
                                 <thead>
                                 <tr>
-                                    
-                                  
+
+
                                     <th scope="col">Sl:</th>
-                                    <th scope="col">Nababur:</th>
-                                 
+                                    <th scope="col">--:</th>
+
                                     <th scope="col">Email:</th>
                                     <th scope="col">Gender:</th>
-                               
+
                                     <th scope="col">Bio:</th>
                                     <th scope="col">Cover letter:</th>
                                     <th scope="col">Resume:</th>
@@ -49,26 +49,26 @@
                                         <td>{{$user->name }}</td>
                                         <td>{{$user->email}}</td>
                                         <td>{{$user->profile->gender}}</td>
-                           
+
                                         <td>{{$user->profile->bio}}</td>
-                            
+
                                         @if ($user->profile->cover_letter)
                                         <td><a class="badge badge-secondary" target="_blank" href="{{ url('storage/'.$user->profile->cover_letter) }}">Cover letter</a></td>
-                                        
+
                                         @else
                                         <td>Not uploaded</td>
                                         @endif
 
                                         @if ($user->profile->resume)
                                         <td><a class="badge badge-secondary" target="_blank" href="{{ url('storage/'.$user->profile->resume) }}">Resume</a></td>
-                                        
+
                                         @else
                                         <td>Not uploaded</td>
                                         @endif
-                                    
+
                                     </tr>
-                            
-                        
+
+
                                 </tbody>
                             </table>
                         </div>

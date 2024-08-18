@@ -1,9 +1,5 @@
 /*
   Theme Name: Bootstrap Admin Dashboard
-  Author: Nababur Rahaman
-  Support: nababurbd@gmail.com
-  Author URL: https://github.com/nababur
-  Author URL: https://www.peopleperhour.com/freelancer/development-it/nababur-rahman-wordpress-codeigniter-expert-qjnjaw
   Description: Free use for Backend Development.
   Version: 1.0
 */
@@ -22,10 +18,10 @@
 /* ----------- iPad 1, 2, Mini and Air ----------- */
 
 /* Portrait */
-@media only screen 
-  and (min-device-width: 768px) 
-  and (max-device-width: 1024px) 
-  and (orientation: portrait) 
+@media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
+  and (orientation: portrait)
   and (-webkit-min-device-pixel-ratio: 1) {
 
 
@@ -46,10 +42,10 @@
 
 
 /* Landscape */
-@media only screen 
-  and (min-device-width: 768px) 
-  and (max-device-width: 1024px) 
-  and (orientation: landscape) 
+@media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
+  and (orientation: landscape)
   and (-webkit-min-device-pixel-ratio: 1) {
 
 
@@ -144,7 +140,7 @@
 
     width: 60px;
     height: 60px;
- 
+
 }
 #profile-photo {
     height: auto;
@@ -304,9 +300,9 @@
 
 
 .spinner{
- 
+
     right:42%;
-    
+
     animation: spin 1s infinite linear;
 }
 
@@ -324,7 +320,7 @@
 
     width: 60px;
     height: 60px;
- 
+
 }
 
 #profile-photo {
@@ -472,9 +468,9 @@
 
 
 .spinner{
- 
+
     right:42%;
-    
+
     animation: spin 1s infinite linear;
 }
 .set_thumb #settings-logo img {
@@ -492,7 +488,7 @@
 
     width: 60px;
     height: 60px;
- 
+
 }
 #profile-photo {
     height: auto;

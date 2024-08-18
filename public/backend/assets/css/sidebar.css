@@ -1,10 +1,6 @@
 
 /*
   Theme Name: Bootstrap Admin Dashboard
-  Author: Nababur Rahaman
-  Support: nababurbd@gmail.com
-  Author URL: https://github.com/nababur
-  Author URL: https://www.peopleperhour.com/freelancer/development-it/nababur-rahman-wordpress-codeigniter-expert-qjnjaw
   Description: Free use for Backend Development.
   Version: 1.0
 */
@@ -69,21 +65,21 @@ box-shadow: 0 0px 35px rgba(232, 232, 232, 1.1);}
 
 .left-sidebar {
 overflow:scroll !important
-   
+
 }
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
     width: 8px;
 }
- 
+
 ::-webkit-scrollbar-track {
-  
+
 }
 
 ::-webkit-scrollbar-thumb {
     -webkit-border-radius: 8px;
     border-radius: 8px;
-    background: #6d6d6d; 
+    background: #6d6d6d;
 }
 
 

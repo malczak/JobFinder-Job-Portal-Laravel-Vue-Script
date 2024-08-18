@@ -1,9 +1,5 @@
 /*
   Theme Name: Bootstrap Admin Dashboard
-  Author: Nababur Rahaman
-  Support: nababurbd@gmail.com
-  Author URL: https://github.com/nababur
-  Author URL: https://www.peopleperhour.com/freelancer/development-it/nababur-rahman-wordpress-codeigniter-expert-qjnjaw
   Description: Free use for Backend Development.
   Version: 1.0
 */
@@ -26,8 +22,8 @@ a {
     text-decoration: none;
     background-color: transparent;
 }
-a, a:active, a:focus, 
-button, button:focus, button:active, 
+a, a:active, a:focus,
+button, button:focus, button:active,
 .btn, .btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn.focus:active, .btn.active.focus {
     outline: none;
     outline: 0;
@@ -102,19 +98,19 @@ a:hover {
 
 }
 .spinner{
- 
+
     opacity:1;
     width: 80px;
     height: 80px;
-    
+
     border: 2px solid #f3f3f3;
     border-top:3px solid #2a2a2a;
     border-radius: 100%;
-    
+
 position: absolute;
     right: 50%;
     top: 45%;
-    
+
     animation: spin 1s infinite linear;
 }
 
