@@ -16,7 +16,7 @@ class EmailController extends Controller
             'your_email' => 'required|email',
             'friend_name' => 'required|string',
             'friend_email' => 'required|email',
-          
+
         ]);
 
 
@@ -34,15 +34,15 @@ class EmailController extends Controller
             'cname'=>$request->get('cname'),
             'position'=>$request->get('position'),
             'jobUrl'=>$jobUrl
-           
+
         );
 
         $emailTo = $request->get('friend_email');
 
         try{
-    
+
             Mail::to($emailTo)->send(new SendJob($data));
-            return redirect()->back()->with('jobmsg', 'Job sent Successfully!');
+            return redirect()->back()->with('jobmsg', 'Offer sent Successfully!');
 
         }catch(\Exception $e){
             return redirect()->back()->with('error_msg', 'Something went wrong. Please try again later.');

@@ -8,12 +8,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.jobBoard', 'Crafting the Ultimate Job Board: Elevate Your Platform with Our SEO-Optimized Laravel Vue Template') }}</title>
+    <title>{{ config('app.jobBoard', 'Crafting the Ultimate Offer Board: Elevate Your Platform with Our SEO-Optimized Laravel Vue Template') }}</title>
     <meta name="description" content="Unlock unparalleled job board performance with our meticulously designed Laravel Vue template. Seamlessly blend functionality and aesthetics while dominating search rankings through advanced SEO optimization. Elevate user experience, engage job seekers and employers effortlessly. Explore limitless possibilities for your job board platform today.">
 
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+{{--    @vite(['resources/sass/app.scss', 'resources/js/app.js'])--}}
 
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700|Work+Sans:300,400,700" rel="stylesheet">
 
@@ -38,7 +38,11 @@
 
     <link rel="stylesheet" href="{{ asset('external/css/style.css') }}">
 
+    @vite('resources/css/app.css')
 
 </head>
 
 <body>
+<h1 class="text-3xl font-bold underline">
+    Hello world!
+</h1>

@@ -1,29 +1,26 @@
-import { defineConfig } from 'vite';
+import {defineConfig} from 'vite';
+import fs from 'fs';
 import laravel from 'laravel-vite-plugin';
-import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/sass/app.scss',
-                'resources/js/app.js',
+                'resources/css/app.css',
+                // 'resources/js/app.js',
             ],
             refresh: true,
         }),
-        vue({
-            template: {
-                transformAssetUrls: {
-                    base: null,
-                    includeAbsolute: false,
-                },
-            },
-        }),
     ],
-    resolve: {
-        alias: {
-            vue: 'vue/dist/vue.esm-bundler.js',
+    server: {
+        host: "0.0.0.0",
+        hmr: {
+            host: "finejobs.test"
         },
-    },
-    
+        https: {
+            key: fs.readFileSync(`/var/www/ssl/ssl_cert.key`),
+            cert: fs.readFileSync(`/var/www/ssl/ssl_cert.crt`),
+        },
+        port: 8888
+    }
 });

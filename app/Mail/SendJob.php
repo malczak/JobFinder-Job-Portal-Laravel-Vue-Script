@@ -28,9 +28,9 @@ class SendJob extends Mailable
      */
     public function envelope(): Envelope
     {
-        
+
         return new Envelope(
-            subject: 'Strong Job Recommendation.',
+            subject: 'Strong Offer Recommendation.',
         );
     }
 

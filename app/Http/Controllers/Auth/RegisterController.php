@@ -76,8 +76,8 @@ class RegisterController extends Controller
 
         Profile::create([
             'user_id'=>$user->id,
-            'gender'=> request('gender'),
-            'dob'=> request('dob')
+//            'gender'=> request('gender'),
+//            'dob'=> request('dob')
         ]);
 
         return $user;

@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\JobPostRequest;
 use App\Models\Category;
 use App\Models\Company;
-use App\Models\Job;
+use App\Models\Offer;
 use App\Models\Post;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-class JobController extends Controller
+class OfferController extends Controller
 {
 
     public function __construct()
@@ -25,19 +25,18 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Job::latest()->limit(15)->where('status', 1)->get();
-      
-       
+        $jobs = Offer::latest()->limit(15)->where('status', 1)->get();
+
+
         $companies = Company::inRandomOrder()->take(12)->get();
 
-        // $companies = Company::get()->random(12);
 
-        $posts = Post::where('status', 1)->get();
-
-        $testimonial = Testimonial::where('status', 1)->get()->first();
-        $categories = Category::has('jobs')->where('status', 1)->get();
-        // $allprosal = Job::has('users')->where('user_id', auth()->user()->id)->get();
-        return view('welcome', compact('jobs','companies', 'categories', 'posts', 'testimonial'));
+        $categories = Category::has('offers')->where('status', 1)->get();
+        if(!count($categories)) {
+            $categories = Category::where('status',1)->get();
+        }
+        // $allprosal = Offer::has('users')->where('user_id', auth()->user()->id)->get();
+        return view('welcome', compact('jobs','companies', 'categories'));
     }
 
 
@@ -62,7 +61,7 @@ class JobController extends Controller
 
 
 
-        Job::create([
+        Offer::create([
             'user_id'=> $user_id,
             'company_id'=> $company_id,
             'title' => request('title'),
@@ -81,7 +80,7 @@ class JobController extends Controller
         ]);
 
 
-        return redirect()->back()->with('success', 'Job posted Successfully.');
+        return redirect()->back()->with('success', 'Offer posted Successfully.');
     }
 
     /**
@@ -93,9 +92,9 @@ class JobController extends Controller
         $type = $request->get('type');
         $category = $request->get('category_id');
         $address = $request->get('address');
-        
+
         if($title || $type || $category || $address){
-            $jobs = Job::where('title', 'LIKE', '%'.$title.'%')
+            $jobs = Offer::where('title', 'LIKE', '%'.$title.'%')
             ->orWhere('type', $type)
             ->orWhere('category_id', $category)
             ->orWhere('address', $address)
@@ -103,8 +102,8 @@ class JobController extends Controller
 
             return view('frontend.jobs.alljobs', compact('jobs'));
         }else{
-    
-            $jobs = Job::latest()->paginate(25);
+
+            $jobs = Offer::latest()->paginate(25);
             return view('frontend.jobs.alljobs', compact('jobs'));
 
         }
@@ -113,11 +112,11 @@ class JobController extends Controller
 
     }
 
-    
+
     /**
      * Display the specified resource.
      */
-    public function show( $id, Job $job)
+    public function show($id, Offer $job)
     {
 
         $jobRecommendation = $this->jobRecommendation ($job);
@@ -127,7 +126,7 @@ class JobController extends Controller
     public function jobRecommendation ($job){
         $data = [];
 
-       $jobBasedOnCategory = Job::latest()
+       $jobBasedOnCategory = Offer::latest()
                             ->where('category_id', $job->category_id)
                             ->whereDate('last_date', '>', date('y-m-d'))
                             ->where('id', '!=', $job->id)
@@ -137,7 +136,7 @@ class JobController extends Controller
 
         array_push($data, $jobBasedOnCategory);
 
-       $jobBasedOnCompany = Job::latest()
+       $jobBasedOnCompany = Offer::latest()
                             ->where('company_id', $job->company_id)
                             ->whereDate('last_date', '>', date('y-m-d'))
                             ->where('id', '!=', $job->id)
@@ -145,11 +144,11 @@ class JobController extends Controller
                             ->limit(5)
                             ->get();
         array_push($data, $jobBasedOnCompany);
-        $jobBasedOnPosition = Job::latest()
+        $jobBasedOnPosition = Offer::latest()
                             ->where('position', 'LIKE', '%'.$job->position.'%')
                             ->where('status', 1)
                             ->limit(5);
-                            
+
 
         array_push($data, $jobBasedOnCompany, $jobBasedOnCategory, $jobBasedOnPosition);
 
@@ -165,12 +164,12 @@ class JobController extends Controller
      */
     public function myjob()
     {
-        $jobs = Job::where('user_id', auth()->user()->id)->get();
+        $jobs = Offer::where('user_id', auth()->user()->id)->get();
         return view('frontend.jobs.myjobs', compact('jobs'));
     }
 
     public function edit($id){
-        $job = Job::findOrFail($id);
+        $job = Offer::findOrFail($id);
         return view('frontend.jobs.edit', compact('job'));
 
     }
@@ -180,37 +179,37 @@ class JobController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $job = Job::findOrFail($id);
+        $job = Offer::findOrFail($id);
         $job->update($request->all());
-                
-        return redirect()->back()->with('success', 'Job updated Successfully.');
+
+        return redirect()->back()->with('success', 'Offer updated Successfully.');
     }
 
     /**
-     * Job apply method.
+     * Offer apply method.
      */
     public function apply(Request $request,$id){
-        $jobId = Job::find($id);
+        $jobId = Offer::find($id);
         $jobId->users()->attach(Auth::user()->id);
-    
-        return redirect()->back()->with('message', 'Job applied Successfully.');
+
+        return redirect()->back()->with('message', 'Offer applied Successfully.');
     }
 
 
 
-    // Job applicant method 
+    // Offer applicant method
     public function applicant(){
-        $applicants = Job::has('users')->where('user_id', auth()->user()->id)->get();
+        $applicants = Offer::has('users')->where('user_id', auth()->user()->id)->get();
         return view('frontend.jobs.applicants', compact('applicants'));
 
     }
 
-    // Search Jobs in 
+    // Search Jobs in
     public function searchJobs(Request $request){
 
-       
+
         $keyword = $request->get('keyword');
-        $users = Job::where('title','like','%'.$keyword.'%')
+        $users = Offer::where('title','like','%'.$keyword.'%')
                 ->orWhere('position','like','%'.$keyword.'%')
                 ->orWhere('address','like','%'.$keyword.'%')
                 ->get();
@@ -218,20 +217,20 @@ class JobController extends Controller
 
     }
 
-    // Job active/deactive 
+    // Offer active/deactive
     public function jobToggle($id){
-        $jobtoggle = Job::find($id);
+        $jobtoggle = Offer::find($id);
         $jobtoggle->status = !$jobtoggle->status;
         $jobtoggle->save();
 
         return redirect('/jobs/myjobs')->with('success', 'Status Updated Successfully!');
     }
 
-    // Job Deleted 
+    // Offer Deleted
     public function deleteJob(Request $request, string $id){
-        $jobDel = Job::find($id);
+        $jobDel = Offer::find($id);
         $jobDel->delete();
-        return redirect('/jobs/create')->with('success', 'Job Deleted Successfully!');
+        return redirect('/jobs/create')->with('success', 'Offer Deleted Successfully!');
     }
 
 

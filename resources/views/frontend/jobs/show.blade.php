@@ -26,7 +26,7 @@
           </div>
 
         </div>
-          
+
         @endif
 
         @if (Session::has('error_msg'))
@@ -37,7 +37,7 @@
           </div>
 
         </div>
-          
+
         @endif
 
         @if (isset($errors) && count($errors) > 0)
@@ -58,11 +58,11 @@
       </div>
     </div>
     <div class="row">
-   
+
       <div class="col-md-12 col-lg-8 mb-5">
-      
-        
-      
+
+
+
         <div class="p-5 bg-white">
 
           <div class="mb-4 mb-md-4 mr-5">
@@ -80,48 +80,48 @@
           </div>
 
 
-        
+
           <div class=" mb-8 bg-white">
             <!-- icon-book mr-3-->
             <h3 class="h5 text-black mb-3"><i class="icon-library_books" style="color: #28a745;">&nbsp;</i>Description </a></h3>
             <p> {{$job->description}}</p>
-            
+
           </div>
-    
+
           <div class=" mb-8 bg-white">
             <!--icon-align-left mr-3-->
             <h3 class="h5 text-black mb-3"><i class="icon-user" style="color: #28a745;">&nbsp;</i>Roles and Responsibilities</h3>
             <p>{{$job->roles}} .</p>
-            
+
           </div>
           <div class=" mb-8 bg-white">
             <h3 class="h5 text-black mb-3"><i class="icon-users" style="color: #28a745;">&nbsp;</i>Number of vacancy</h3>
             <p>{{$job->number_of_vacancy }} Year of Experience.</p>
-            
+
           </div>
           <div class=" mb-8 bg-white">
             <h3 class="h5 text-black mb-3"><i class="icon-clock-o" style="color: #28a745;">&nbsp;</i>Experience</h3>
             <p>{{$job->experience}}&nbsp;years</p>
-            
+
           </div>
           <div class=" mb-8 bg-white">
             <h3 class="h5 text-black mb-3"><i class="icon-genderless" style="color: #28a745;">&nbsp;</i>Gender</h3>
             <p> {{  Str::ucfirst($job->gender)}}</p>
-            
+
           </div>
           <div class=" mb-8 bg-white">
             <h3 class="h5 text-black mb-3"><i class="icon-money" style="color: #28a745;">&nbsp;</i>Salary</h3>
             <p>${{$job->salary}}</p>
           </div>
-      
- 
+
+
 
         </div>
       </div>
 
       <div class="col-lg-4">
-        
-        
+
+
         <div class="p-4 mb-3 bg-white">
           <h3 class="h5 text-black mb-3">Short Job Info</h3>
             <p>Company name: {{$job->company->cname ?? ''}}</p>
@@ -139,14 +139,14 @@
                     <apply-component jobid={{ $job->id }}></apply-component>
 
                   </p>
-                      
+
                   @else
                       <p> <button type="button" class="w-100 text-black btn btn-warning " disabled>Already applied</button></p>
                   @endif
 
                   <p> <favorite-component :jobid={{$job->id}} :favorited={{ $job->checkSaved() ? 'true':'false' }}></favorite-component></p>
 
-          
+
 
             @endif
 
@@ -155,7 +155,7 @@
               <p><a href="/register" class="btn btn-dark" style="width: 100%;">For apply need to Register/Login.</a></p>
 
             @endif
-          {{-- <p><a href="#" class="btn btn-primary  py-2 px-4">Apply Job</a></p> --}}
+          {{-- <p><a href="#" class="btn btn-primary  py-2 px-4">Apply Offer</a></p> --}}
         </div>
       </div>
     </div>
@@ -165,7 +165,7 @@
 
 
 @if (count($jobRecommendation) > 0)
-  
+
 
   <div class="site-section bg-light pt-0">
     <div class="container">
@@ -180,20 +180,20 @@
           <div class="nonloop-block-16 owl-carousel">
 
             @foreach ($jobRecommendation as $recommendJob)
-              
-          
+
+
             <div class="border rounded p-4 bg-white">
               <h2 class="h5">{{ $recommendJob->title }}</h2>
               <p><span class="
                 border rounded p-1 px-2
-                @if($recommendJob->type =='fulltime')         
+                @if($recommendJob->type =='fulltime')
                 text-info  border-info
-                @elseif($recommendJob->type =='freelance') 
+                @elseif($recommendJob->type =='freelance')
                 text-warning   border-warning
-                @elseif($recommendJob->type =='partime')   
+                @elseif($recommendJob->type =='partime')
                 text-danger   border-danger
-                
-                @elseif($recommendJob->type =='remote')   
+
+                @elseif($recommendJob->type =='remote')
                 text-dark   border-dark
                 @endif
 
@@ -207,9 +207,9 @@
 
               <a href="{{ route('job.show', [$recommendJob->id, $recommendJob->slug]) }}"><button class="btn btn-success btn-sm mt-4">Apply this Job</button></a>
             </div>
-          
+
             @endforeach
-        
+
 
 
           </div>
@@ -221,7 +221,7 @@
 
 @endif
 
-  <!-- Job Recomend Modal -->
+  <!-- Offer Recomend Modal -->
   <div class="modal fade" id="recomend-job-modal" tabindex="-1" role="dialog" aria-labelledby="login-modal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content pb-4">
@@ -233,11 +233,11 @@
         </div>
         <div class="modal-body">
           <div class="card">
-          
+
               <div class="card-body">
                   <form method="POST" action="{{ route('mail') }}">
                       @csrf
-                    
+
                       <input type="hidden" name="job_id" value="{{ $job->id }}">
                       <input type="hidden" name="job_slug" value="{{ $job->slug }}">
                       <input type="hidden" name="title" value="{{ $job->title }}">
@@ -246,10 +246,10 @@
 
                       <div class="row mb-2">
                           <label for="your_name" class="col-md-12 col-form-label text-md-start">{{ __('Your name *') }}</label>
-  
+
                           <div class="col-md-12">
                               <input id="your_name" type="text" class="form-control @error('your_name') is-invalid @enderror" name="your_name" value="{{ old('your_name') }}"  autocomplete="your_name" autofocus>
-  
+
                               @error('your_name')
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $message }}</strong>
@@ -260,10 +260,10 @@
 
                       <div class="row mb-2">
                           <label for="your_email" class="col-md-12 col-form-label text-md-start">{{ __('Your email *') }}</label>
-  
+
                           <div class="col-md-12">
                               <input id="your_email" type="email" class="form-control @error('your_email') is-invalid @enderror" name="your_email" value="{{ old('your_email') }}"  autocomplete="your_email" autofocus>
-  
+
                               @error('your_email')
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $message }}</strong>
@@ -297,13 +297,13 @@
                           @enderror
                       </div>
                   </div>
-  
+
                       <div class="row mb-0">
                           <div class="col-md-12 ">
                               <button type="submit" class="btn btn-primary">
                                   {{ __('Mail this job') }}
                               </button>
-  
+
 
                           </div>
                       </div>
@@ -316,7 +316,7 @@
     </div>
   </div>
     <!-- Modal -->
-  
+
 
 
 

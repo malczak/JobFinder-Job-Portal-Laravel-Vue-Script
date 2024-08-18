@@ -23,7 +23,7 @@ class Admin
     //     $adminRole = Auth::user()->roles()->pluck('name');
     //     if ($adminRole->contains('admin')) {
     //         return $next($request);
-           
+
     //     }
 
 
@@ -32,16 +32,15 @@ class Admin
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check()) {
-            $adminRole = Auth::user()->roles()->pluck('name');
-            if ($adminRole->contains('admin')) {
+            if (Auth::user()->isAdmin()) {
                 return $next($request);
             }
         }
-    
+
         // Handle unauthorized access here
         return redirect()->to('/');
     }
-    
+
 
 
 

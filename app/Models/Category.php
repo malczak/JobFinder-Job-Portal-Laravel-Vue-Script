@@ -12,8 +12,8 @@ class Category extends Model
     protected $guarded  = [];
 
 
-    public function jobs(){
-    	return $this->hasMany(Job::class);
+    public function offers(){
+    	return $this->hasMany(Offer::class);
     }
     public function posts(){
     	return $this->hasMany(Post::class);

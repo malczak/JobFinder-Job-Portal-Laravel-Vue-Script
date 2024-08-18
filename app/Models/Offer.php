@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Job extends Model
+class Offer extends Model
 {
     use SoftDeletes;
 
@@ -20,6 +20,9 @@ class Job extends Model
 
     protected $guarded  = [];
 
+    protected $casts = [
+        'salary' => 'array'
+    ];
 
     public function company(){
         return $this->belongsTo(Company::class);
@@ -34,7 +37,7 @@ class Job extends Model
     }
 
     public function favorites(){
-        return $this->belongsToMany(Job::class, 'favorites', 'job_id', 'user_id')->withTimestamps();
+        return $this->belongsToMany(Offer::class, 'favorites', 'job_id', 'user_id')->withTimestamps();
     }
 
     public function checkSaved(){

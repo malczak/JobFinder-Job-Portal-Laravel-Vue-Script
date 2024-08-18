@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Job>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Offer>
  */
 class JobFactory extends Factory
 {
@@ -37,7 +37,7 @@ class JobFactory extends Factory
             'gender'=>$this->faker->randomElement(['male', 'female']),
             'salary'=>rand(10000, 80000),
 
-            
+
         ];
     }
 }

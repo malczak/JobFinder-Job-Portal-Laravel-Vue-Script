@@ -14,8 +14,12 @@ class Company extends Model
         'cname','user_id', 'slug', 'address', 'phone', 'website', 'logo','banner', 'slogan', 'description'
     ];
 
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
     public function jobs(){
-        return $this->hasMany(Job::class);
+        return $this->hasMany(Offer::class);
     }
     public function getRouteKeyName()
     {

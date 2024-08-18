@@ -11,16 +11,16 @@
     </div>
     <div class="site-mobile-menu-body"></div>
   </div> <!-- .site-mobile-menu -->
-  
+
 
 <div class="site-navbar-wrap js-site-navbar bg-white">
-      
+
     <div class="container">
       <div class="site-navbar bg-light">
         <div class="py-1">
           <div class="row align-items-center">
             <div class="col-2">
-              <h2 class="mb-0 site-logo"><a href="/">Job<strong class="font-weight-bold">Finder</strong> </a></h2>
+              <h2 class="mb-0 site-logo"><a href="/">Fine<strong class="font-weight-bold">Jobs</strong> </a></h2>
             </div>
             <div class="col-10">
               <nav class="site-navigation text-right" role="navigation">
@@ -28,23 +28,23 @@
                   <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
 
                   <ul class="site-menu js-clone-nav d-none d-lg-block">
-         
+
                     <li class="{{ request()->routeIs('company') ? 'active' : '' }}"><a href="{{ route('company') }}">Company</a></li>
                     @if (!Auth::check())
                     <li class="{{ request()->routeIs('/register') ? 'active' : '' }}"><a href="/register">For Job Seeker</a></li>
                     <li class="{{ request()->routeIs('employer.register') ? 'active' : '' }}"><a href="{{ route('employer.register') }}">For Employees</a></li>
                     @else
 
-                 
+
                         @if (Auth::user()->user_type==='employer' || Auth::user()->user_type==='seeker')
                         <li class="has-children">
                           <a href="/home">Dashboard</a>
-                          
+
                           <ul class="dropdown arrow-top">
 
                             @if (Auth::user()->user_type==='employer')
                             <li><a  href="{{ route('job.create') }}">
-                                {{ __('Create new Job') }}
+                                {{ __('Create new Offer') }}
                               </a>
                             </li>
                             <li><a  href="{{ route('myjobs') }}">
@@ -76,7 +76,7 @@
 
                           </ul>
                         </li>
-                    
+
                         @else
 
                           <li><a href="/home">Dashboard</a></li>
@@ -104,7 +104,7 @@
                       <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                           @csrf
                       </form>
-                      
+
                     @endif
 
 
@@ -133,11 +133,11 @@
       </div>
       <div class="modal-body">
         <div class="card">
-       
+
             <div class="card-body">
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
-                      
+
                     <div class="row mb-3">
                         <label for="email" class="col-md-12 col-form-label text-md-start">{{ __('Email Address') }}</label>
 
@@ -205,4 +205,3 @@
   <!-- Modal -->
 
 
-  
